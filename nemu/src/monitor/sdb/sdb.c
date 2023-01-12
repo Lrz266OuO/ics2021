@@ -47,6 +47,7 @@ static int cmd_si(char *args) {
   }
   else {
     uint64_t n = (uint64_t)arg;
+    printf("n = %ld", n);
     cpu_exec(n);
   }
 
