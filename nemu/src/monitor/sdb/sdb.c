@@ -41,21 +41,12 @@ static int cmd_q(char *args) {
 static int cmd_si(char *args) {
   // 取出si后的参数
   char *arg = strtok(NULL, " ");
-  if (arg == NULL) {
-    // 无参数，缺省为1
-    cpu_exec(1);
+  // 无参数，缺省为1
+  int step = 1;
+  if (arg != NULL) {
+    sscanf(arg, "%d", &step);
   }
-  else {
-    // 有参数
-    int n;
-    sscanf(arg, "%d", &n);
-    printf("n = %d\n", n);
-    if (n < -1) {
-      printf("Warning: Unknown parameter after 'si'\n");
-    }
-    else cpu_exec(n);
-  }
-
+  cpu_exec(step);
   return 0;
 }
 
