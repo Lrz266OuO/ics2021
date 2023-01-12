@@ -47,8 +47,10 @@ static int cmd_si(char *args) {
   }
   else {
     // 有参数，将字符串转为uint64_t类型
+    // Warning: 如果arg为字母，atoi函数会返回0
     uint64_t n = atoi(arg);
-    // printf("n = %ld\n", n);
+
+    printf("n = %ld\n", n);
     cpu_exec(n);
   }
 
