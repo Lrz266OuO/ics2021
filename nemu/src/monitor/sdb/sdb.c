@@ -46,11 +46,11 @@ static int cmd_si(char *args) {
     cpu_exec(1);
   }
   else {
-    // 有参数，将字符串转为uint64_t类型
-    uint64_t n;
-    sscanf(arg, "%lu", &n);
-    printf("n = %lu\n", n);
-    if (n == -1) {
+    // 有参数
+    int n;
+    sscanf(arg, "%d", &n);
+    printf("n = %d\n", n);
+    if (n < -1) {
       printf("Warning: Unknown parameter after 'si'\n");
     }
     else cpu_exec(n);
