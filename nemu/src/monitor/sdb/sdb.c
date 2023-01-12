@@ -47,12 +47,12 @@ static int cmd_si(char *args) {
   }
   else {
     // 有参数，将字符串转为uint64_t类型
-    // Warning: 如果arg为字母，atoi函数会返回0
-    uint64_t n = atoi(arg);
-    if (n == 0) {
-      printf("Warning: Unknown parameter\n");
+    int n;
+    sscanf(arg, "%d", &n);
+    printf("n = %d\n", n);
+    if (n == -1) {
+      printf("Warning: Unknown parameter after 'si'\n");
     }
-    // printf("n = %ld\n", n);
     else cpu_exec(n);
   }
 
