@@ -112,7 +112,7 @@ void sdb_mainloop() {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
         if (cmd_table[i].handler(args) < 0) { 
           
-          // TODO: 优雅的退出
+          // TODO: 优雅地退出
           nemu_state.state = NEMU_QUIT;
 
           return; }
