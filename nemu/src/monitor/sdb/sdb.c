@@ -46,8 +46,9 @@ static int cmd_si(char *args) {
     printf("Unknown command\n");
   }
   else {
+    // 有参数，将字符串转为uint64_t类型
     uint64_t n = atoi(arg);
-    printf("n = %ld\n", n);
+    // printf("n = %ld\n", n);
     cpu_exec(n);
   }
 
