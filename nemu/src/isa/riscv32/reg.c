@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-12 01:57:34
+ * @LastEditTime: 2023-01-12 01:59:15
  * @Description:  
  */
 #include <isa.h>
@@ -15,6 +15,7 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+// 打印寄存器状态
 void isa_reg_display() {
   int i;
   for (i=0; i<32; i++) {
