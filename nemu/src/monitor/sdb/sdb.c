@@ -44,6 +44,7 @@ static int cmd_si(char *args) {
   // 无参数，缺省为1
   int step = 1;
   if (arg != NULL) {
+    // 这里如果si之后输入的是字母，默认参数为1
     sscanf(arg, "%d", &step);
   }
   cpu_exec(step);
