@@ -42,16 +42,18 @@ static int cmd_si(char *args) {
   // 取出si后的参数
   char *arg = strtok(NULL, " ");
   if (arg == NULL) {
-    // 无参数，报错
-    printf("Unknown command\n");
+    // 无参数，缺省为1
+    cpu_exec(1);
   }
   else {
     // 有参数，将字符串转为uint64_t类型
     // Warning: 如果arg为字母，atoi函数会返回0
     uint64_t n = atoi(arg);
-
-    printf("n = %ld\n", n);
-    cpu_exec(n);
+    if (n == 0) {
+      printf("Warning: Unknown parameter\n");
+    }
+    // printf("n = %ld\n", n);
+    else cpu_exec(n);
   }
 
   return 0;
