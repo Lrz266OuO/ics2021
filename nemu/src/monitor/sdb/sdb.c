@@ -46,9 +46,9 @@ static int cmd_si(char *args) {
     printf("Unknown command\n");
   }
   else {
-    uint64_t *n = (uint64_t *)arg;
-    printf("n = %ld", *n);
-    cpu_exec(*n);
+    uint64_t n = atoi(arg);
+    printf("n = %ld\n", n);
+    cpu_exec(n);
   }
 
   return 0;
