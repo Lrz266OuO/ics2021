@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-12 01:21:44
+ * @LastEditTime: 2023-01-12 01:54:33
  * @Description:  
  */
 #include <isa.h>
@@ -16,6 +16,11 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
+  int i;
+  for (i=0; i<32; i++) {
+    printf("%s\t0x%8x\n", regs[i], gpr(i));
+  }
+  return;
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
