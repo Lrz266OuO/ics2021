@@ -51,8 +51,16 @@ static int cmd_si(char *args) {
   return 0;
 }
 
-// TODO: 打印寄存器
+// 打印程序状态
 static int cmd_info(char *args) {
+  char *arg = strtok(NULL, " ");
+  // 打印寄存器状态
+  if (strcmp(arg, "r") == 0) isa_reg_display();
+  // 打印监视点信息
+  else if (strcmp(arg, "w") == 0) {
+
+  }
+  else printf("Unknown command '%s'\n", arg);
   return 0;
 }
 
