@@ -51,6 +51,11 @@ static int cmd_si(char *args) {
   return 0;
 }
 
+// TODO: 打印寄存器
+static int cmd_info(char *args) {
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -64,6 +69,7 @@ static struct {
 
   /* TODO: Add more commands */
   { "si", "Execute N instructions in one step before pausing the program", cmd_si},
+  { "info", "Print registers or monitoring points", cmd_info},
 
 };
 
