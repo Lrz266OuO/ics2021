@@ -39,7 +39,17 @@ static int cmd_q(char *args) {
 
 // 单步执行
 static int cmd_si(char *args) {
-  
+  // 取出si后的参数
+  char *arg = strtok(NULL, " ");
+  if (arg == NULL) {
+    // 无参数，报错
+    printf("Unknown command\n");
+  }
+  else {
+    uint64_t n = (uint64_t)arg;
+    cpu_exec(n);
+  }
+
   return 0;
 }
 
