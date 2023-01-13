@@ -6,9 +6,19 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
-
   /* TODO: Add more token types */
+  TK_NOTYPE = 256,  // space
+  DEC_NUM,          // decimal number
+  HEX_NUM,          // hexadecimal number
+  REG,              // register
+  TK_EQ,            // equal
+  TK_NEQ,           // not equal
+  TK_AND,           // logical and
+  TK_OR,            // logical or
+  
+  // TODO: optional task
+  NEG_NUM,          // negative number(-)
+  DEFER,            // deference(*)
 
 };
 
@@ -21,9 +31,22 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
-  {"==", TK_EQ},        // equal
+  {" +",              TK_NOTYPE}, // spaces
+  {"\\+",             '+'},       // plus
+  {"\\(",             '('},       // left bracket
+  {"\\)",             ')'},       // right bracket
+  {"\\-",             '-'},       // minus or negative number
+  {"\\*",             '*'},       // multiply or deference
+  {"\\/",             '/'},       // divide
+  {"[0-9]+",          DEC_NUM},   // decimal number
+  {"0x[0-9A-Fa-f]+",  HEX_NUM},   // hexadecimal number
+  {"\\$[0-9a-z]+",    REG},       // register
+  {"==",              TK_EQ},     // equal
+  {"!=",              TK_NEQ},    // not equal
+  {"&&",              TK_AND},    // logical and
+  {"\\|\\|",          TK_OR},     // logical or
+  {"!",               '!'},       // logical not
+
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -56,11 +79,11 @@ static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
-  int position = 0;
+  int position = 0; // 当前处理到的位置
   int i;
   regmatch_t pmatch;
 
-  nr_token = 0;
+  nr_token = 0;     // 已经被识别出的token数目
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */

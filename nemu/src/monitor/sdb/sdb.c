@@ -36,7 +36,7 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
-  // TODO: 优雅地退出
+  // 优雅地退出
   nemu_state.state = NEMU_QUIT;
   return -1;
 }
@@ -88,6 +88,18 @@ static int cmd_x(char *args) {
   return 0;
 }
 
+static int cmd_p(char *args) {
+
+}
+
+static int cmd_w(char *args) {
+
+}
+
+static int cmd_d(char *args) {
+  
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -102,7 +114,10 @@ static struct {
   /* TODO: Add more commands */
   { "si", "Execute N instructions in one step before pausing the program", cmd_si},
   { "info", "Print registers or monitoring points", cmd_info},
-  { "x", "Scan memory", cmd_x},
+  { "x", "Calculate the expression, and use it as the beginning to scan memory", cmd_x},
+  { "p", "Calculate the expression", cmd_p},
+  { "w", "Set up the monitoring points", cmd_w},
+  { "d", "Delete the monitoring point whose serial number is N", cmd_d},
 
 };
 
