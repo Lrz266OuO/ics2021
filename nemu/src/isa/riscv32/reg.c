@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-12 19:57:05
+ * @LastEditTime: 2023-01-12 21:05:05
  * @Description:  
  */
 #include <isa.h>
@@ -18,7 +18,7 @@ const char *regs[] = {
 // 打印寄存器状态
 void isa_reg_display() {
   int i;
-  for (i=0; i<32; i++) {
+  for (i = 0; i < 32; i++) {
     // TODO: reg_name函数中第二个参数width不知道是做什么用的，暂且设定为0
     printf("%s\t0x%08x\n", reg_name(i, 0), gpr(i));
   }

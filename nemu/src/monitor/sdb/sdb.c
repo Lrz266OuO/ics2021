@@ -2,7 +2,9 @@
 #include <cpu/cpu.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <memory/paddr.h>
 #include "sdb.h"
+#include "utils.h"
 
 static int is_batch_mode = false;
 
@@ -34,6 +36,8 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
+  // TODO: 优雅地退出
+  nemu_state.state = NEMU_QUIT;
   return -1;
 }
 
@@ -68,8 +72,17 @@ static int cmd_x(char *args) {
   if(args == NULL) printf("x: Unknown command\n");
   // 输出n个4字节
   // TODO: 扫描内存部分的表达式先进行简化，暂且保证EXPR一定是一个十六进制数
-  int N, EXPR;
+  int N = -1;
+  paddr_t EXPR = 0x80000000;
   sscanf(args, "%d%x", &N, &EXPR);
+  int i, j;
+  for (i = 0; i < N; i++) {
+    for (j = 0; j < 4; j++) {
+      uint8_t* position = guest_to_host(EXPR + i*4 + j);
+      printf("0x%x\t", *position);
+    }
+    printf("\n");
+  }
 
   return 0;
 }
@@ -150,12 +163,7 @@ void sdb_mainloop() {
     int i;
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
-        if (cmd_table[i].handler(args) < 0) { 
-          
-          // TODO: 优雅地退出
-          nemu_state.state = NEMU_QUIT;
-
-          return; }
+        if (cmd_table[i].handler(args) < 0) { return; }
         break;
       }
     }
