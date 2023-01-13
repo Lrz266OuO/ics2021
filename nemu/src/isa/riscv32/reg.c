@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-12 01:59:15
+ * @LastEditTime: 2023-01-12 19:55:00
  * @Description:  
  */
 #include <isa.h>
@@ -19,7 +19,8 @@ const char *regs[] = {
 void isa_reg_display() {
   int i;
   for (i=0; i<32; i++) {
-    printf("%s\t0x%08x\n", regs[i], gpr(i));
+    // printf("%s\t0x%08x\n", regs[i], gpr(i));
+    printf("%s\t0x%08x\n", reg_name(i, 0), gpr(i));
   }
   printf("pc\t0x%08x\n", cpu.pc);
   return;

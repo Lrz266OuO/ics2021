@@ -42,12 +42,12 @@ static int cmd_si(char *args) {
   // 取出si后的参数
   char *arg = strtok(NULL, " ");
   // 无参数，缺省为1
-  int step = 1;
+  int N = 1;
   if (arg != NULL) {
     // 这里如果si之后输入的是字母，默认参数为1
-    sscanf(arg, "%d", &step);
+    sscanf(arg, "%d", &N);
   }
-  cpu_exec(step);
+  cpu_exec(N);
   return 0;
 }
 
@@ -60,7 +60,17 @@ static int cmd_info(char *args) {
   else if (strcmp(arg, "w") == 0) {
 
   }
-  else printf("Unknown command '%s'\n", arg);
+  else printf("info: Unknown command '%s'\n", arg);
+  return 0;
+}
+
+static int cmd_x(char *args) {
+  if(args == NULL) printf("x: Unknown command\n");
+  // 输出n个4字节
+  // TODO: 扫描内存部分的表达式先进行简化，暂且保证EXPR一定是一个十六进制数
+  int N, EXPR;
+  sscanf(args, "%d%x", &N, &EXPR);
+
   return 0;
 }
 
@@ -78,6 +88,7 @@ static struct {
   /* TODO: Add more commands */
   { "si", "Execute N instructions in one step before pausing the program", cmd_si},
   { "info", "Print registers or monitoring points", cmd_info},
+  { "x", "Scan memory", cmd_x},
 
 };
 
@@ -101,7 +112,7 @@ static int cmd_help(char *args) {
         return 0;
       }
     }
-    printf("Unknown command '%s'\n", arg);
+    printf("help: Unknown command '%s'\n", arg);
   }
   return 0;
 }
