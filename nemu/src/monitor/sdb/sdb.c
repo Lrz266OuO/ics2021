@@ -77,7 +77,7 @@ static int cmd_x(char *args) {
   sscanf(args, "%d%x", &N, &EXPR);
   int i, j;
   for (i = 0; i < N; i++) {
-    printf("0x%8x\n", EXPR + i*4);
+    printf("0x%8x: ", EXPR + i*4);
     for (j = 0; j < 4; j++) {
       uint8_t* position = guest_to_host(EXPR + i*4 + j);
       printf("%.2x ", *position);
