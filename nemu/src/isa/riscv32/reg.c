@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-12 21:05:05
+ * @LastEditTime: 2023-01-14 02:46:28
  * @Description:  
  */
 #include <isa.h>
@@ -26,6 +26,7 @@ void isa_reg_display() {
   return;
 }
 
+// 通过寄存器名字找到寄存器
 word_t isa_reg_str2val(const char *s, bool *success) {
   return 0;
 }

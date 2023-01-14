@@ -43,7 +43,7 @@ static struct rule {
   {"\\(",                 '('},       // left bracket
   {"\\)",                 ')'},       // right bracket
   {"[0-9]+",              DEC_NUM},   // decimal numbers
-  {"0x[0-9A-Fa-f]{1,8}",  HEX_NUM},   // hexadecimal numbers
+  {"0x[0-9a-f]{1,8}",     HEX_NUM},   // hexadecimal numbers
   {"\\$[0-9a-z]{1,3}",    REG},       // registers
   {"[A-Za-z_]{1,31}",     VAR},       // variates   
   {"==",                  TK_EQ},     // equal
@@ -75,6 +75,7 @@ void init_regex() {
   }
 }
 
+// 词法分析
 typedef struct token {
   int type;
   char str[32];
@@ -108,7 +109,6 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        // TODO: 使用strncpy函数
         switch (rules[i].token_type) {
           case '+':
             tokens[nr_token].type = '+';
@@ -257,6 +257,10 @@ static bool make_token(char *e) {
 }
 
 
+
+// 递归求值
+word_t eval(int left, int right, bool *success);
+
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -264,7 +268,59 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  // TODO();
+  int left = 0, right = nr_token - 1;
+  word_t result = eval(left, right, success);
 
-  return 0;
+  return result;
 }
+
+word_t eval(int left, int right, bool *success) {
+  if (left > right) {
+    /* Bad expression */
+    *success = false;
+    printf("Wrong expression: left > right\n");
+    return 0;
+  }
+
+  else if (left == right) {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number
+     */
+    if (tokens[left].type == DEC_NUM
+     || tokens[left].type == HEX_NUM
+     || tokens[left].type == REG
+     || tokens[left].type == VAR
+     ) {
+      word_t val;
+      switch (tokens[left].type) {
+        case DEC_NUM:
+          // strtol函数用于将string以十进制/十六进制的方式转为十进制数
+          val = strtol(tokens[left].str, NULL, 10);
+          break;
+        case HEX_NUM:
+          val = strtol(tokens[left].str, NULL, 16);
+          break;
+        case REG:
+          // 使用isa_reg_str2val函数找到寄存器
+          val = isa_reg_str2val(tokens[left].str, success);
+          break;
+        case VAR:
+          break;
+        default:
+          break;
+      }
+      return val;
+    }
+    else {
+      /* Bad expression */
+      *success = false;
+      printf("Wrong expression: unknown number or variate\n");
+      return 0;
+    }
+
+  }
+
+}
+
