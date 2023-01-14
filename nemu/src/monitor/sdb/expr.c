@@ -4,13 +4,16 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <string.h>
+#include <assert.h>
 
 enum {
-  /* TODO: Add more token types */
+  /* Add more token types */
   TK_NOTYPE = 256,  // space
-  DEC_NUM,          // decimal number
-  HEX_NUM,          // hexadecimal number
-  REG,              // register
+  DEC_NUM,          // decimal numbers
+  HEX_NUM,          // hexadecimal numbers
+  REG,              // registers
+  VAR,              // variates
   TK_EQ,            // equal
   TK_NEQ,           // not equal
   TK_AND,           // logical and
@@ -27,25 +30,27 @@ static struct rule {
   int token_type;
 } rules[] = {
 
-  /* TODO: Add more rules.
+  /* Add more rules.
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +",              TK_NOTYPE}, // spaces
-  {"\\+",             '+'},       // plus
-  {"\\(",             '('},       // left bracket
-  {"\\)",             ')'},       // right bracket
-  {"\\-",             '-'},       // minus or negative number
-  {"\\*",             '*'},       // multiply or deference
-  {"\\/",             '/'},       // divide
-  {"[0-9]+",          DEC_NUM},   // decimal number
-  {"0x[0-9A-Fa-f]+",  HEX_NUM},   // hexadecimal number
-  {"\\$[0-9a-z]+",    REG},       // register
-  {"==",              TK_EQ},     // equal
-  {"!=",              TK_NEQ},    // not equal
-  {"&&",              TK_AND},    // logical and
-  {"\\|\\|",          TK_OR},     // logical or
-  {"!",               '!'},       // logical not
+  {" +",                  TK_NOTYPE}, // spaces
+  {"\\+",                 '+'},       // plus
+  {"\\-",                 '-'},       // minus or negative number
+  {"\\*",                 '*'},       // multiply or deference
+  {"\\/",                 '/'},       // divide
+  {"%",                   '%'},       // remainder
+  {"\\(",                 '('},       // left bracket
+  {"\\)",                 ')'},       // right bracket
+  {"[0-9]+",              DEC_NUM},   // decimal numbers
+  {"0x[0-9A-Fa-f]{1,8}",  HEX_NUM},   // hexadecimal numbers
+  {"\\$[0-9a-z]{1,3}",    REG},       // registers
+  {"[A-Za-z_]{1,31}",     VAR},       // variates   
+  {"==",                  TK_EQ},     // equal
+  {"!=",                  TK_NEQ},    // not equal
+  {"&&",                  TK_AND},    // logical and
+  {"\\|\\|",              TK_OR},     // logical or
+  {"!",                   '!'},       // logical not
 
 };
 
@@ -73,6 +78,7 @@ void init_regex() {
 typedef struct token {
   int type;
   char str[32];
+  int priority;   // 运算符优先级，数字越小优先级越高
 } Token;
 
 static Token tokens[32] __attribute__((used)) = {};
@@ -87,7 +93,7 @@ static bool make_token(char *e) {
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
-    for (i = 0; i < NR_REGEX; i ++) {
+    for (i = 0; i < NR_REGEX; i++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
@@ -102,8 +108,139 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
+        // TODO: 使用strncpy函数
         switch (rules[i].token_type) {
-          default: TODO();
+          case '+':
+            tokens[nr_token].type = '+';
+            tokens[nr_token].priority = 4;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case '-':
+            // 需要考虑负数的问题
+            // 减号在第一位或前面一个token不是数字/变量/右括号
+            if ((nr_token==0) || 
+                (nr_token!=0 && tokens[nr_token-1].type!=DEC_NUM 
+                             && tokens[nr_token-1].type!=HEX_NUM 
+                             && tokens[nr_token-1].type!=REG
+                             && tokens[nr_token-1].type!=VAR
+                             && tokens[nr_token-1].type!=')')
+                ) {
+              tokens[nr_token].type = NEG_NUM;
+              tokens[nr_token].priority = 2;
+            }
+            else {
+              tokens[nr_token].type = '-';
+              tokens[nr_token].priority = 4;
+            }
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case '*':
+            // 需要考虑指针解引用的问题
+            // 乘号在第一位或前面一个token不是数字/变量/右括号
+            if ((nr_token==0) || 
+                (nr_token!=0 && tokens[nr_token-1].type!=DEC_NUM 
+                             && tokens[nr_token-1].type!=HEX_NUM 
+                             && tokens[nr_token-1].type!=REG
+                             && tokens[nr_token-1].type!=VAR
+                             && tokens[nr_token-1].type!=')')
+                ) {
+              tokens[nr_token].type = DEFER;
+              tokens[nr_token].priority = 2;
+            }
+            else {
+              tokens[nr_token].type = '*';
+              tokens[nr_token].priority = 3;
+            }
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case '/':
+            tokens[nr_token].type = '/';
+            tokens[nr_token].priority = 3;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case '%':
+            tokens[nr_token].type = '%';
+            tokens[nr_token].priority = 3;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case '(':
+            tokens[nr_token].type = '(';
+            tokens[nr_token].priority = 1;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case ')':
+            tokens[nr_token].type = ')';
+            tokens[nr_token].priority = 1;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case DEC_NUM:
+            tokens[nr_token].type = DEC_NUM;
+            tokens[nr_token].priority = 16;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case HEX_NUM:
+            tokens[nr_token].type = HEX_NUM;
+            tokens[nr_token].priority = 16;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case REG:
+            tokens[nr_token].type = REG;
+            tokens[nr_token].priority = 16;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case VAR:
+            tokens[nr_token].type = VAR;
+            tokens[nr_token].priority = 16;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case TK_EQ:
+            tokens[nr_token].type = TK_EQ;
+            tokens[nr_token].priority = 7;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case TK_NEQ:
+            tokens[nr_token].type = TK_NEQ;
+            tokens[nr_token].priority = 7;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case TK_AND:
+            tokens[nr_token].type = TK_AND;
+            tokens[nr_token].priority = 11;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case TK_OR:
+            tokens[nr_token].type = TK_OR;
+            tokens[nr_token].priority = 12;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case '!':
+            tokens[nr_token].type = '!';
+            tokens[nr_token].priority = 2;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case TK_NOTYPE:
+            break;
+          default: 
+            // TODO();
+            printf("EXPR: Unknown operator\n");
+            assert(0);
+            break;
         }
 
         break;
