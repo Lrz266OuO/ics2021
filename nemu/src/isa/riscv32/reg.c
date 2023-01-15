@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-14 02:46:28
+ * @LastEditTime: 2023-01-14 20:18:49
  * @Description:  
  */
 #include <isa.h>
@@ -28,5 +28,22 @@ void isa_reg_display() {
 
 // 通过寄存器名字找到寄存器
 word_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+  // 注意regs[]的名称，第一个是$0，后面都省略了$
+  if (strcmp(s, reg_name(0, 0)) == 0) {
+    return gpr(0);
+  }
+  else {
+    int i;
+    for (i = 1; i < 32; i++) {
+      if (strcmp(s+1, reg_name(i, 0)) == 0) {
+        return gpr(i);
+      }
+    }
+    // 未找到寄存器名称
+    if (i == 32) {
+      *success = false;
+      printf("Wrong register: %s\n", s);
+      return 0;
+    }
+  }
 }

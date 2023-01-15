@@ -316,7 +316,7 @@ word_t eval(int left, int right, bool *success) {
     else {
       /* Bad expression */
       *success = false;
-      printf("Wrong expression: unknown number or variate\n");
+      printf("Wrong expression: unknown number or variate(%d)\n", left);
       return 0;
     }
 
