@@ -13,7 +13,6 @@ enum {
   DEC_NUM,          // decimal numbers
   HEX_NUM,          // hexadecimal numbers
   REG,              // registers
-  VAR,              // variates
   TK_EQ,            // equal
   TK_NEQ,           // not equal
   TK_AND,           // logical and
@@ -44,8 +43,7 @@ static struct rule {
   {"\\)",                 ')'},       // right bracket
   {"[0-9]+",              DEC_NUM},   // decimal numbers
   {"0x[0-9a-f]{1,8}",     HEX_NUM},   // hexadecimal numbers
-  {"\\$[0-9a-z]{1,3}",    REG},       // registers
-  {"[A-Za-z_]{1,31}",     VAR},       // variates   
+  {"\\$[0-9a-z]{1,3}",    REG},       // registers  
   {"==",                  TK_EQ},     // equal
   {"!=",                  TK_NEQ},    // not equal
   {"&&",                  TK_AND},    // logical and
@@ -123,7 +121,6 @@ static bool make_token(char *e) {
                 (nr_token!=0 && tokens[nr_token-1].type!=DEC_NUM 
                              && tokens[nr_token-1].type!=HEX_NUM 
                              && tokens[nr_token-1].type!=REG
-                             && tokens[nr_token-1].type!=VAR
                              && tokens[nr_token-1].type!=')')
                 ) {
               tokens[nr_token].type = NEG_NUM;
@@ -143,7 +140,6 @@ static bool make_token(char *e) {
                 (nr_token!=0 && tokens[nr_token-1].type!=DEC_NUM 
                              && tokens[nr_token-1].type!=HEX_NUM 
                              && tokens[nr_token-1].type!=REG
-                             && tokens[nr_token-1].type!=VAR
                              && tokens[nr_token-1].type!=')')
                 ) {
               tokens[nr_token].type = DEFER;
@@ -194,12 +190,6 @@ static bool make_token(char *e) {
             break;
           case REG:
             tokens[nr_token].type = REG;
-            tokens[nr_token].priority = 16;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
-            nr_token++;
-            break;
-          case VAR:
-            tokens[nr_token].type = VAR;
             tokens[nr_token].priority = 16;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             nr_token++;
@@ -291,7 +281,6 @@ word_t eval(int left, int right, bool *success) {
     if (tokens[left].type == DEC_NUM
      || tokens[left].type == HEX_NUM
      || tokens[left].type == REG
-     || tokens[left].type == VAR
      ) {
       word_t val;
       switch (tokens[left].type) {
@@ -306,9 +295,8 @@ word_t eval(int left, int right, bool *success) {
           // 使用isa_reg_str2val函数找到寄存器
           val = isa_reg_str2val(tokens[left].str, success);
           break;
-        case VAR:
-          break;
         default:
+          // 理论上每别的可能了，这一段就不管了
           break;
       }
       return val;
