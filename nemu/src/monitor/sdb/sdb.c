@@ -74,7 +74,6 @@ static int cmd_x(char *args) {
     return 0;
   }
   // 输出n个4字节
-  // TODO: 扫描内存部分的表达式先进行简化，暂且保证EXPR一定是一个十六进制数
   int N = -1;
   /*
   paddr_t EXPR = 0x80000000;
