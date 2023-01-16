@@ -4,8 +4,10 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <memory/paddr.h>
 
 enum {
   /* Add more token types */
@@ -178,19 +180,19 @@ static bool make_token(char *e) {
             break;
           case DEC_NUM:
             tokens[nr_token].type = DEC_NUM;
-            tokens[nr_token].priority = 16;
+            tokens[nr_token].priority = 0;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             nr_token++;
             break;
           case HEX_NUM:
             tokens[nr_token].type = HEX_NUM;
-            tokens[nr_token].priority = 16;
+            tokens[nr_token].priority = 0;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             nr_token++;
             break;
           case REG:
             tokens[nr_token].type = REG;
-            tokens[nr_token].priority = 16;
+            tokens[nr_token].priority = 0;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             nr_token++;
             break;
@@ -250,6 +252,8 @@ static bool make_token(char *e) {
 
 // 递归求值
 word_t eval(int left, int right, bool *success);
+bool check_parentheses(int left, int right);
+int check_dominant_operator(int left, int right, bool *success);
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -259,6 +263,7 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
+  *success = true;
   int left = 0, right = nr_token - 1;
   word_t result = eval(left, right, success);
 
@@ -310,5 +315,79 @@ word_t eval(int left, int right, bool *success) {
 
   }
 
+  else if (check_parentheses(left, right) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(left+1, right-1, success);
+  }
+
+  else {
+    int op = check_dominant_operator(left, right, success);
+    // word_t left_val = eval(left, op-1, success);
+    // word_t right_val = eval(op+1, right, success);
+    word_t left_val, right_val;
+
+    switch (tokens[op].type) {
+      case '+': return eval(left, op-1, success) + eval(op+1, right, success);
+      case '-': return eval(left, op-1, success) - eval(op+1, right, success);
+      case '*': return eval(left, op-1, success) * eval(op+1, right, success);
+      case '/':
+        // 需要考虑除数为0的情况
+        if (right_val == 0) {
+          *success = false;
+          printf("Wrong expression: divided by zero\n");
+          assert(0);
+        }
+        else return eval(left, op-1, success) / eval(op+1, right, success);
+      case '%': return eval(left, op-1, success) % eval(op+1, right, success);
+      case TK_EQ: return eval(left, op-1, success) == eval(op+1, right, success);
+      case TK_NEQ: return eval(left, op-1, success) != eval(op+1, right, success);
+      case TK_AND: return eval(left, op-1, success) && eval(op+1, right, success);
+      case TK_OR: return eval(left, op-1, success) || eval(op+1, right, success);
+      case '!': return !(eval(op+1, right, success));
+      case NEG_NUM: return -(eval(op+1, right, success));
+      case DEFER: return *((uint32_t *)guest_to_host(eval(op+1, right, success)));
+      default:
+        *success = false;
+        printf("Wrong expression: unknown opreator\n");
+        assert(0);
+        break;
+    }
+  }
+
 }
 
+bool check_parentheses(int left, int right) {
+  if (!(tokens[left].type == '(' && tokens[right].type == ')')) {
+    return false;
+  }
+  int i;
+  int count_parentheses = 1;
+  for(i = left+1; i <= right; i++) {
+    // 要考虑'()+()'的情况
+    if (count_parentheses == 0) {
+      return false;
+    }
+    // '('->count++, ')'->count--, others->continue
+    if (tokens[i].type == '(') {
+      count_parentheses++;
+    }
+    else if (tokens[i].type == ')') {
+      count_parentheses--;
+    }
+    else {
+      continue;
+    }
+  }
+
+  if (count_parentheses == 0) {
+    return true;
+  }
+}
+
+int check_dominant_operator(int left, int right, bool *success) {
+
+  
+  return left;
+}
