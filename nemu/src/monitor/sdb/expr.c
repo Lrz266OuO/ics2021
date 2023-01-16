@@ -91,6 +91,11 @@ static bool make_token(char *e) {
   int i;
   regmatch_t pmatch;
 
+  printf("Last Tokens\n");
+  for (int i=0; i<10; i++) {
+    printf("%d\t%s\t%d\n", tokens[i].type, tokens[i].str, tokens[i].priority);
+  }
+
   nr_token = 0;     // 已经被识别出的token数目
 
   while (e[position] != '\0') {
