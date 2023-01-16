@@ -299,7 +299,7 @@ word_t eval(int left, int right, bool *success) {
           break;
         case REG:
           // 使用isa_reg_str2val函数找到寄存器
-          // printf("1\n");
+          printf("%s\n", tokens[left].str);
           val = isa_reg_str2val(tokens[left].str, success);
           break;
         default:
