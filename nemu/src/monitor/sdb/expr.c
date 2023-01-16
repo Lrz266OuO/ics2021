@@ -427,6 +427,10 @@ int check_dominant_operator(int left, int right, bool *success) {
         break;
     }
   }
-
+  if (highest_priority == 1) {
+    *success = false;
+    printf("error: we don't find dominant operator\n");
+    assert(0);
+  }
   return ret;
 }
