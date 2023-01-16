@@ -91,10 +91,12 @@ static bool make_token(char *e) {
   int i;
   regmatch_t pmatch;
 
+  /*
   printf("Last Tokens: %d\n", nr_token);
   for (int i=0; i<10; i++) {
     printf("%d\t%s\t%d\n", tokens[i].type, tokens[i].str, tokens[i].priority);
   }
+  */
 
   nr_token = 0;     // 已经被识别出的token数目
 
@@ -119,7 +121,8 @@ static bool make_token(char *e) {
           case '+':
             tokens[nr_token].type = '+';
             tokens[nr_token].priority = 4;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case '-':
@@ -138,7 +141,8 @@ static bool make_token(char *e) {
               tokens[nr_token].type = '-';
               tokens[nr_token].priority = 4;
             }
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case '*':
@@ -157,79 +161,92 @@ static bool make_token(char *e) {
               tokens[nr_token].type = '*';
               tokens[nr_token].priority = 3;
             }
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case '/':
             tokens[nr_token].type = '/';
             tokens[nr_token].priority = 3;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case '%':
             tokens[nr_token].type = '%';
             tokens[nr_token].priority = 3;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case '(':
             tokens[nr_token].type = '(';
             tokens[nr_token].priority = 1;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case ')':
             tokens[nr_token].type = ')';
             tokens[nr_token].priority = 1;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case DEC_NUM:
             tokens[nr_token].type = DEC_NUM;
             tokens[nr_token].priority = 0;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case HEX_NUM:
             tokens[nr_token].type = HEX_NUM;
             tokens[nr_token].priority = 0;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case REG:
             tokens[nr_token].type = REG;
             tokens[nr_token].priority = 0;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case TK_EQ:
             tokens[nr_token].type = TK_EQ;
             tokens[nr_token].priority = 7;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case TK_NEQ:
             tokens[nr_token].type = TK_NEQ;
             tokens[nr_token].priority = 7;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case TK_AND:
             tokens[nr_token].type = TK_AND;
             tokens[nr_token].priority = 11;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case TK_OR:
             tokens[nr_token].type = TK_OR;
             tokens[nr_token].priority = 12;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case '!':
             tokens[nr_token].type = '!';
             tokens[nr_token].priority = 2;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sprintf(tokens[nr_token].str, "%.*s", substr_len, substr_start);
             nr_token++;
             break;
           case TK_NOTYPE:
