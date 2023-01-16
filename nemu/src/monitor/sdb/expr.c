@@ -44,7 +44,7 @@ static struct rule {
   {"\\(",                 '('},       // left bracket
   {"\\)",                 ')'},       // right bracket
   {"[0-9]+",              DEC_NUM},   // decimal numbers
-  {"0x[0-9a-f]{1,8}",     HEX_NUM},   // hexadecimal numbers
+  {"0x[0-9a-f]",          HEX_NUM},   // hexadecimal numbers
   {"\\$[0-9a-z]{1,3}",    REG},       // registers  
   {"==",                  TK_EQ},     // equal
   {"!=",                  TK_NEQ},    // not equal
@@ -384,10 +384,49 @@ bool check_parentheses(int left, int right) {
   if (count_parentheses == 0) {
     return true;
   }
+  else return false;
 }
 
 int check_dominant_operator(int left, int right, bool *success) {
-
+  /* 注意括号里的运算符不可以是主运算符，
+   * 当in_parentheses>0时，
+   * 说明此时在括号内
+   * 且外层包裹着in_parentheses层括号
+   */
+  int in_parentheses = 0;
+  /* 运算符优先级是有边界的，
+   * 优先级为1->括号，
+   * 优先级为0->数字
+   * 如果最后highest_level = 1时，
+   * 说明没有主运算符，出错了
+   */
+  int highest_priority = 1;
   
-  return left;
+  int ret = left;
+  int i;
+  for (i = left; i <= right; i++) {
+    switch (tokens[i].priority) {
+      case 0:
+        // 是数字或寄存器，不是运算符
+        break;
+      case 1:
+        // 是左/右括号，括号内的运算符都不是主运算符
+        if (tokens[i].type == '(') {
+          in_parentheses++;
+        }
+        else {
+          in_parentheses--;
+        }
+        break;
+      default:
+        // 是运算符，如果不在括号里，就可以判断是否是主运算符
+        if (in_parentheses == 0 && tokens[i].priority >= highest_priority) {
+          ret = i;
+          highest_priority = tokens[i].priority;
+        }
+        break;
+    }
+  }
+
+  return ret;
 }
