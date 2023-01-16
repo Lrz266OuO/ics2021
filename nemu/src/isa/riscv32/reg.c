@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-15 00:01:34
+ * @LastEditTime: 2023-01-15 21:59:22
  * @Description:  
  */
 #include <isa.h>
@@ -46,4 +46,5 @@ word_t isa_reg_str2val(const char *s, bool *success) {
       return 0;
     }
   }
+  return 0;
 }

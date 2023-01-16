@@ -69,7 +69,10 @@ static int cmd_info(char *args) {
 }
 
 static int cmd_x(char *args) {
-  if(args == NULL) printf("x: Unknown command\n");
+  if(args == NULL) {
+    printf("x: Unknown command\n");
+    return 0;
+  }
   // 输出n个4字节
   // TODO: 扫描内存部分的表达式先进行简化，暂且保证EXPR一定是一个十六进制数
   int N = -1;
@@ -89,6 +92,21 @@ static int cmd_x(char *args) {
 }
 
 static int cmd_p(char *args) {
+  if (args == NULL) {
+    printf("p: Unknown expression\n");
+    return 0;
+  }
+  
+  char *expression = args;
+  bool success = true;
+  uint32_t result = expr(expression, &success);
+  
+  if (success == true) {
+    printf("%u\n", result);
+  }
+  else {
+    printf("expr: Wrong expression.\n");
+  }
   return 0;
 }
 

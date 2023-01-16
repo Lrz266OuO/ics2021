@@ -326,7 +326,7 @@ word_t eval(int left, int right, bool *success) {
     int op = check_dominant_operator(left, right, success);
     // word_t left_val = eval(left, op-1, success);
     // word_t right_val = eval(op+1, right, success);
-    word_t left_val, right_val;
+    // word_t left_val, right_val;
 
     switch (tokens[op].type) {
       case '+': return eval(left, op-1, success) + eval(op+1, right, success);
@@ -334,7 +334,7 @@ word_t eval(int left, int right, bool *success) {
       case '*': return eval(left, op-1, success) * eval(op+1, right, success);
       case '/':
         // 需要考虑除数为0的情况
-        if (right_val == 0) {
+        if (eval(op+1, right, success) == 0) {
           *success = false;
           printf("Wrong expression: divided by zero\n");
           assert(0);
@@ -396,7 +396,7 @@ int check_dominant_operator(int left, int right, bool *success) {
   int in_parentheses = 0;
   /* 运算符优先级是有边界的，
    * 优先级为1->括号，
-   * 优先级为0->数字
+   * 优先级为0->数字，
    * 如果最后highest_level = 1时，
    * 说明没有主运算符，出错了
    */
