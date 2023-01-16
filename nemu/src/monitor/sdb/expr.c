@@ -91,7 +91,7 @@ static bool make_token(char *e) {
   int i;
   regmatch_t pmatch;
 
-  printf("Last Tokens\n");
+  printf("Last Tokens: %d\n", nr_token);
   for (int i=0; i<10; i++) {
     printf("%d\t%s\t%d\n", tokens[i].type, tokens[i].str, tokens[i].priority);
   }
