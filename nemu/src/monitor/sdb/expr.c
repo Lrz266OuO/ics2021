@@ -43,7 +43,7 @@ static struct rule {
   {"%",                   '%'},       // remainder
   {"\\(",                 '('},       // left bracket
   {"\\)",                 ')'},       // right bracket
-  {"0x[0-9a-f]",          HEX_NUM},   // hexadecimal numbers
+  {"0x[0-9a-f]+",         HEX_NUM},   // hexadecimal numbers
   {"[0-9]+",              DEC_NUM},   // decimal numbers
   
   {"\\$[0-9a-z]{1,3}",    REG},       // registers  
