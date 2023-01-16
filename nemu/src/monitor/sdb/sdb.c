@@ -105,7 +105,7 @@ static int cmd_p(char *args) {
     printf("%d\n", result);
   }
   else {
-    printf("expr: Wrong expression.\n");
+    printf("failure: Wrong expression.\n");
   }
   return 0;
 }
