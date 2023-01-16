@@ -76,13 +76,25 @@ static int cmd_x(char *args) {
   // 输出n个4字节
   // TODO: 扫描内存部分的表达式先进行简化，暂且保证EXPR一定是一个十六进制数
   int N = -1;
+  /*
   paddr_t EXPR = 0x80000000;
   sscanf(args, "%d%x", &N, &EXPR);
+  */
+  char EXPR[1024];
+  sscanf(args, "%d%s", &N, EXPR);
+  bool success = true;
+  uint32_t expression = expr(EXPR, &success);
+
+  if (success == false) {
+    printf("failure: Wrong expression.\n");
+    return 0;
+  }
+
   int i, j;
   for (i = 0; i < N; i++) {
-    printf("0x%8x: ", EXPR + i*4);
+    printf("0x%8x: ", expression + i*4);
     for (j = 0; j < 4; j++) {
-      uint8_t* position = guest_to_host(EXPR + i*4 + j);
+      uint8_t* position = guest_to_host(expression+ i*4 + j);
       printf("%.2x ", *position);
     }
     printf("\n");
