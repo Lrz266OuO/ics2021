@@ -66,7 +66,7 @@ void display_wp() {
   }
   else {
     WP *cur = head;
-    printf("Watchpoint pool:\n");
+    printf("NO\texpression\tvalue\n");
     while (cur != free_) {
       printf("%d\t", cur->NO);
       printf("%s\t", cur->expression);
