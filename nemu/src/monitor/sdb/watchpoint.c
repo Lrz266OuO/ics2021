@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-16 22:44:28
+ * @LastEditTime: 2023-01-17 00:03:12
  * @Description:  
  */
 #include "sdb.h"
@@ -126,3 +126,16 @@ void display_wp() {
   return;
 }
 
+bool check_watchpoint(WP **point) {
+  WP *cur = head;
+  bool success = true;
+  while (cur){
+    if (expr(cur->expression, &success)){
+      *point = cur;
+      //IFDEF(CONFIG_DEBUG, Log("Break"));
+      return true;
+    }
+    cur = cur->next;
+  }
+  return false;
+}

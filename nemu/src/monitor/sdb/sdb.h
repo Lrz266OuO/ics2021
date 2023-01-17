@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-16 19:43:48
+ * @LastEditTime: 2023-01-17 00:02:00
  * @Description:  
  */
 #ifndef __SDB_H__
@@ -24,5 +24,6 @@ word_t expr(char *e, bool *success);
 WP* new_wp(char *args, word_t value);
 void free_wp(int number);
 void display_wp();
+bool check_watchpoint(WP **point);
 
 #endif
