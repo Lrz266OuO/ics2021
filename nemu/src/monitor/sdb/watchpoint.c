@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-16 22:42:47
+ * @LastEditTime: 2023-01-16 22:44:28
  * @Description:  
  */
 #include "sdb.h"
@@ -66,6 +66,7 @@ void free_wp(int number) {
   // 如果只有一个监视点(number==0)就直接清空
   if (head->next == free_) {
     free_ = head;
+    printf("No.0 watchpoint has been deleted\n");
     return;
   }
   WP *free_watchpoint = NULL;
