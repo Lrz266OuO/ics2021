@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-16 22:36:10
+ * @LastEditTime: 2023-01-16 22:42:47
  * @Description:  
  */
 #include "sdb.h"
@@ -60,7 +60,7 @@ void free_wp(int number) {
   }
   // 如果number大于free_->NO就出错
   if (number >= free_->NO) {
-    printf("Warning: \n");
+    printf("Warning: No.%d watchpoint doesn't exist\n", number);
     return;
   }
   // 如果只有一个监视点(number==0)就直接清空
