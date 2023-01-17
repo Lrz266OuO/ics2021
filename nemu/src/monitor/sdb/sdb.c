@@ -62,7 +62,7 @@ static int cmd_info(char *args) {
   if (strcmp(arg, "r") == 0) isa_reg_display();
   // 打印监视点信息
   else if (strcmp(arg, "w") == 0) {
-
+    display_wp();
   }
   else printf("info: Unknown command '%s'\n", arg);
   return 0;
@@ -82,7 +82,7 @@ static int cmd_x(char *args) {
   char EXPR[1024];
   sscanf(args, "%d%s", &N, EXPR);
   bool success = true;
-  uint32_t expression = expr(EXPR, &success);
+  word_t expression = expr(EXPR, &success);
 
   if (success == false) {
     printf("failure: Wrong expression.\n");
@@ -110,7 +110,7 @@ static int cmd_p(char *args) {
   
   char *expression = args;
   bool success = true;
-  uint32_t result = expr(expression, &success);
+  word_t result = expr(expression, &success);
   
   if (success == true) {
     printf("%d\n", result);
@@ -122,6 +122,24 @@ static int cmd_p(char *args) {
 }
 
 static int cmd_w(char *args) {
+  if (args == NULL) {
+    printf("p: Unknown expression\n");
+    return 0;
+  }
+  
+  char *expression = args;
+  bool success = true;
+  word_t result = expr(expression, &success);
+  
+  if (success == true) {
+    WP *watchpoint = new_wp(args, result);
+    if (watchpoint != NULL) {
+		  printf("This expression is on No.%d watchpoint.\n", watchpoint->NO);
+	  }
+  }
+  else {
+    printf("failure: Wrong expression.\n");
+  }
   return 0;
 }
 
