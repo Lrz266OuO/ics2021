@@ -164,11 +164,11 @@ static struct {
   const char *description;
   int (*handler) (char *);
 } cmd_table [] = {
+  
+  /* TODO: Add more commands */
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
-  /* TODO: Add more commands */
   { "si", "Execute N instructions in one step before pausing the program", cmd_si},
   { "info", "Print registers or monitoring points", cmd_info},
   { "x", "Calculate the expression, and use it as the beginning to scan memory", cmd_x},

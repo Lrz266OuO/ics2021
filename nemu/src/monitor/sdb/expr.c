@@ -19,8 +19,6 @@ enum {
   TK_NEQ,           // not equal
   TK_AND,           // logical and
   TK_OR,            // logical or
-  
-  // TODO: optional task
   NEG_NUM,          // negative number(-)
   DEFER,            // deference(*)
 
@@ -237,7 +235,6 @@ static bool make_token(char *e) {
           case TK_NOTYPE:
             break;
           default: 
-            // TODO();
             printf("EXPR: Unknown operator\n");
             assert(0);
             break;
@@ -270,7 +267,6 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  // TODO();
   *success = true;
   int left = 0, right = nr_token - 1;
   word_t result = eval(left, right, success);

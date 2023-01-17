@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-17 00:08:43
+ * @LastEditTime: 2023-01-17 00:20:16
  * @Description:  
  */
 #include "sdb.h"
@@ -53,7 +53,7 @@ WP* new_wp(char *args, word_t value) {
 }
 
 void free_wp(int number) {
-  // TODO: 删除watchpoint并将该节点放至free_
+  // 删除watchpoint并将该节点放至free_
   if (!already_init) {
     printf("Warning: You haven't initialized the watchpoint pool\n");
     return;
