@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-17 00:03:12
+ * @LastEditTime: 2023-01-17 00:09:51
  * @Description:  
  */
 #include "sdb.h"
@@ -127,9 +127,12 @@ void display_wp() {
 }
 
 bool check_watchpoint(WP **point) {
+  if (!already_init) {
+    return false;
+  }
   WP *cur = head;
   bool success = true;
-  while (cur){
+  while (cur != free_){
     if (expr(cur->expression, &success)){
       *point = cur;
       //IFDEF(CONFIG_DEBUG, Log("Break"));
