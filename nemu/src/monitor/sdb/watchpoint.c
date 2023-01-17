@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-16 19:47:36
+ * @LastEditTime: 2023-01-16 22:36:10
  * @Description:  
  */
 #include "sdb.h"
@@ -54,6 +54,54 @@ WP* new_wp(char *args, word_t value) {
 
 void free_wp(int number) {
   // TODO: 删除watchpoint并将该节点放至free_
+  if (!already_init) {
+    printf("Warning: You haven't initialized the watchpoint pool\n");
+    return;
+  }
+  // 如果number大于free_->NO就出错
+  if (number >= free_->NO) {
+    printf("Warning: \n");
+    return;
+  }
+  // 如果只有一个监视点(number==0)就直接清空
+  if (head->next == free_) {
+    free_ = head;
+    return;
+  }
+  WP *free_watchpoint = NULL;
+  WP *cur;
+  // 如果number==0，head需要转移到下一个
+  if (number == 0) {
+    free_watchpoint = head;
+    head = head->next;
+    cur = head;
+    cur->NO--;
+    while (cur->next != free_) {
+      cur = cur->next;
+      cur->NO--;
+    }
+    free_watchpoint->NO = (free_->NO)-1;
+    cur->next = free_watchpoint;
+    free_watchpoint->next = free_;
+    free_ = free_watchpoint;
+  }
+  else {
+    cur = head;
+    while (cur->NO != number-1) {
+      cur = cur->next;
+    }
+    free_watchpoint = cur->next;
+    cur->next = free_watchpoint->next;
+    while (cur->next != free_) {
+      cur = cur->next;
+      cur->NO--;
+    }
+    free_watchpoint->NO = (free_->NO)-1;
+    cur->next = free_watchpoint;
+    free_watchpoint->next = free_;
+    free_ = free_watchpoint;
+  }
+  printf("No.%d watchpoint has been deleted\n", number);
   return;
 }
 
