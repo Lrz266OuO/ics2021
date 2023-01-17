@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-17 00:02:00
+ * @LastEditTime: 2023-01-17 00:11:04
  * @Description:  
  */
 #ifndef __SDB_H__
@@ -14,7 +14,7 @@ typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
 
-  /* TODO: Add more members if necessary */
+  /* Add more members if necessary */
   char expression[1024];
   word_t value;
 
