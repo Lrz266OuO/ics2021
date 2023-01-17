@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-16 19:46:01
+ * @LastEditTime: 2023-01-16 19:47:36
  * @Description:  
  */
 #include "sdb.h"
@@ -53,7 +53,7 @@ WP* new_wp(char *args, word_t value) {
 }
 
 void free_wp(int number) {
-  
+  // TODO: 删除watchpoint并将该节点放至free_
   return;
 }
 
