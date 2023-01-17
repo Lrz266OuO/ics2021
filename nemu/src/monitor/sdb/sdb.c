@@ -144,6 +144,16 @@ static int cmd_w(char *args) {
 }
 
 static int cmd_d(char *args) {
+  // 取出d后的参数
+  char *arg = strtok(NULL, " ");
+  int N;
+  if (arg != NULL) {
+    sscanf(arg, "%d", &N);
+    free_wp(N);
+  }
+  else {
+    printf("help: Unknown command\n");
+  }
   return 0;
 }
 
