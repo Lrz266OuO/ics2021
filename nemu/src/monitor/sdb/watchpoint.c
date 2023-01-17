@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-16 19:43:51
+ * @LastEditTime: 2023-01-16 19:46:01
  * @Description:  
  */
 #include "sdb.h"
@@ -66,7 +66,7 @@ void display_wp() {
   }
   else {
     WP *cur = head;
-    printf("NO\texpression\tvalue\n");
+    printf("NO\texpr\tvalue\n");
     while (cur != free_) {
       printf("%d\t", cur->NO);
       printf("%s\t", cur->expression);
