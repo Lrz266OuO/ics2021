@@ -1,3 +1,10 @@
+/*
+ * @Author: Runze Li lirunze.me@gmail.com
+ * @Date: 2023-01-11 02:09:44
+ * @LastEditors: Runze Li
+ * @LastEditTime: 2023-01-17 22:34:38
+ * @Description:  
+ */
 #include "../local-include/reg.h"
 #include <cpu/ifetch.h>
 #include <isa-all-instr.h>
@@ -21,6 +28,8 @@ static def_DopHelper(r) {
   static word_t zero_null = 0;
   op->preg = (is_write && val == 0) ? &zero_null : &gpr(val);
 }
+
+// TODO: 不知道需不需要添加R-type
 
 static def_DHelper(I) {
   decode_op_r(s, id_src1, s->isa.instr.i.rs1, false);
