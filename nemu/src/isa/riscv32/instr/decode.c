@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-18 20:27:32
+ * @LastEditTime: 2023-01-18 22:49:08
  * @Description:  
  */
 #include "../local-include/reg.h"
@@ -29,6 +29,7 @@ static def_DopHelper(r) {
   op->preg = (is_write && val == 0) ? &zero_null : &gpr(val);
 }
 
+/*
 static def_DopHelper(j) {
   op->imm = 0;
   op->imm |= (s->isa.instr.j.imm10_1  << 1);
@@ -36,14 +37,17 @@ static def_DopHelper(j) {
   op->imm |= (s->isa.instr.j.imm19_12 << 12);
   op->imm |= (s->isa.instr.j.simm20   << 20);
 }
+*/
 
 // TODO: R-type, B-type and U-type
 
+/*
 static def_DHelper(R) {
   decode_op_r(s, id_src1, s->isa.instr.r.rs1, false);
   decode_op_r(s, id_src2, s->isa.instr.r.rs2, false);
   decode_op_r(s, id_dest, s->isa.instr.r.rd, true);
 }
+*/
 
 static def_DHelper(I) {
   decode_op_r(s, id_src1, s->isa.instr.i.rs1, false);
@@ -59,6 +63,7 @@ static def_DHelper(S) {
   decode_op_r(s, id_dest, s->isa.instr.s.rs2, false);
 }
 
+/*
 static def_DHelper(B) {
   decode_op_r(s, id_src1, s->isa.instr.b.rs1, false);
   sword_t simm = (s->isa.instr.b.simm12   << 12) 
@@ -68,16 +73,19 @@ static def_DHelper(B) {
   decode_op_i(s, id_src2, simm, false);
   decode_op_r(s, id_dest, s->isa.instr.b.rs2, false);
 }
+*/
 
 static def_DHelper(U) {
   decode_op_i(s, id_src1, s->isa.instr.u.imm31_12 << 12, true);
   decode_op_r(s, id_dest, s->isa.instr.u.rd, true);
 }
 
+/*
 static def_DHelper(J) {
   decode_op_j(s, id_src1, 0, false);
   decode_op_r(s, id_dest, s->isa.instr.j.rd, true);
 }
+*/
 
 def_THelper(load) {
   def_INSTR_TAB("??????? ????? ????? 010 ????? ????? ??", lw);
@@ -89,10 +97,16 @@ def_THelper(store) {
   return EXEC_ID_inv;
 }
 
+def_THelper(compute_imm) {
+  def_INSTR_TAB("??????? ????? ????? 000 ????? ????? ??", addi);
+  return EXEC_ID_inv;
+}
+
 def_THelper(main) {
   def_INSTR_IDTAB("??????? ????? ????? ??? ????? 00000 11", I     , load);
   def_INSTR_IDTAB("??????? ????? ????? ??? ????? 01000 11", S     , store);
   def_INSTR_IDTAB("??????? ????? ????? ??? ????? 01101 11", U     , lui);
+  def_INSTR_IDTAB("??????? ????? ????? ??? ????? 00100 11", I     , compute_imm);
   def_INSTR_TAB  ("??????? ????? ????? ??? ????? 11010 11",         nemu_trap);
   return table_inv(s);
 };

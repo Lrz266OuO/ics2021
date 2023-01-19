@@ -1,3 +1,10 @@
+/*
+ * @Author: Runze Li lirunze.me@gmail.com
+ * @Date: 2023-01-11 02:09:44
+ * @LastEditors: Runze Li
+ * @LastEditTime: 2023-01-18 22:31:23
+ * @Description:  
+ */
 #ifndef __RTL_PSEUDO_H__
 #define __RTL_PSEUDO_H__
 
@@ -5,7 +12,7 @@
 #error "Should be only included by <rtl/rtl.h>"
 #endif
 
-/* RTL pseudo instructions */
+/* RTL pseudo instructions 伪指令*/
 
 static inline def_rtl(li, rtlreg_t* dest, const rtlreg_t imm) {
   rtl_addi(s, dest, rz, imm);
