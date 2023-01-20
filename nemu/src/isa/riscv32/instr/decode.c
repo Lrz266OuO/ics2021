@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-19 22:04:27
+ * @LastEditTime: 2023-01-19 22:09:29
  * @Description:  
  */
 #include "../local-include/reg.h"
@@ -93,6 +93,7 @@ def_THelper(store) {
 
 def_THelper(compute) {
   def_INSTR_TAB("0000000 ????? ????? 000 ????? ????? ??", add);
+  def_INSTR_TAB("0000000 ????? ????? 011 ????? ????? ??", sltu);
   return EXEC_ID_inv;
 }
 
