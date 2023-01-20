@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-18 23:43:00
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-20 02:39:51
+ * @LastEditTime: 2023-01-20 02:52:52
  * @Description:  
  */
 
@@ -24,6 +24,12 @@ def_EHelper(jalr) {
 
 def_EHelper(beq) {
   if (*dsrc1 == *dsrc2) {
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->imm);
+  }
+}
+
+def_EHelper(bne) {
+  if (*dsrc1 != *dsrc2) {
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->imm);
   }
 }
