@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-20 00:34:14
+ * @LastEditTime: 2023-01-20 00:45:50
  * @Description:  
  */
 def_EHelper(lui) {
@@ -15,6 +15,10 @@ def_EHelper(auipc) {
 
 def_EHelper(addi) {
   rtl_addi(s, ddest, dsrc1, id_src2->imm);
+}
+
+def_EHelper(sltiu) {
+  rtl_setrelopi(s, RELOP_LTU, ddest, dsrc1, id_src2->imm);
 }
 
 def_EHelper(add) {
@@ -32,10 +36,8 @@ def_EHelper(sltu) {
 
 def_EHelper(xor) {
   rtl_xor(s, ddest, dsrc1, dsrc2);
-  // printf("%x\t%x\t%x\n", *ddest, *dsrc1, *dsrc2);
 }
 
 def_EHelper(or) {
   rtl_or(s, ddest, dsrc1, dsrc2);
-  printf("%x\t%x\t%x\n", *ddest, *dsrc1, *dsrc2);
 }
