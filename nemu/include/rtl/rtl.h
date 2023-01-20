@@ -1,3 +1,10 @@
+/*
+ * @Author: Runze Li lirunze.me@gmail.com
+ * @Date: 2023-01-11 02:09:44
+ * @LastEditors: Runze Li
+ * @LastEditTime: 2023-01-19 20:27:13
+ * @Description:  
+ */
 #ifndef __RTL_RTL_H__
 #define __RTL_RTL_H__
 
@@ -13,7 +20,7 @@ extern rtlreg_t tmp_reg[4];
 #define s1    (&tmp_reg[1])
 #define s2    (&tmp_reg[2])
 #define t0    (&tmp_reg[3])
-#define rz (&rzero)
+#define rz    (&rzero)
 
 #define def_rtl(name, ...) void concat(rtl_, name)(Decode *s, __VA_ARGS__)
 
