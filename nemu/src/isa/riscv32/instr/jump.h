@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-18 23:43:00
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-19 23:39:35
+ * @LastEditTime: 2023-01-20 02:39:51
  * @Description:  
  */
 
@@ -20,4 +20,10 @@ def_EHelper(jalr) {
   rtl_addi(s, &s->dnpc, dsrc1, id_src2->imm);
   rtl_andi(s, &s->dnpc, &s->dnpc, ~1);
   /* TODO: Register x0 can be used as the destination if the result is not required.*/
+}
+
+def_EHelper(beq) {
+  if (*dsrc1 == *dsrc2) {
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->imm);
+  }
 }
