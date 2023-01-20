@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-20 00:29:01
+ * @LastEditTime: 2023-01-20 00:34:14
  * @Description:  
  */
 def_EHelper(lui) {
@@ -32,5 +32,10 @@ def_EHelper(sltu) {
 
 def_EHelper(xor) {
   rtl_xor(s, ddest, dsrc1, dsrc2);
+  // printf("%x\t%x\t%x\n", *ddest, *dsrc1, *dsrc2);
+}
+
+def_EHelper(or) {
+  rtl_or(s, ddest, dsrc1, dsrc2);
   printf("%x\t%x\t%x\n", *ddest, *dsrc1, *dsrc2);
 }

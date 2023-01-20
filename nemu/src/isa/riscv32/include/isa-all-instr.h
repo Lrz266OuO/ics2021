@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-20 00:27:04
+ * @LastEditTime: 2023-01-20 00:33:09
  * @Description:  
  */
 #include <cpu/decode.h>
@@ -13,7 +13,7 @@
                       f(lw) \
                       f(sw) \
                       f(addi) \
-                      f(add) f(sltu) f(xor) \
+                      f(add) f(sltu) f(xor) f(or) \
                       f(inv) f(nemu_trap)
 
 def_all_EXEC_ID();
