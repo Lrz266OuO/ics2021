@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-20 02:56:03
+ * @LastEditTime: 2023-01-20 03:03:09
  * @Description:  
  */
 #include <cpu/decode.h>
@@ -12,7 +12,7 @@
                       f(jal) f(jalr) \
                       f(beq) f(bne) \
                       f(lw) \
-                      f(sw) \
+                      f(sh) f(sw) \
                       f(addi) f(sltiu) \
                       f(add) f(sub) f(sltu) f(xor) f(or) \
                       f(inv) f(nemu_trap)
