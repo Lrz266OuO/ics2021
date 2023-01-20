@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-20 00:22:32
+ * @LastEditTime: 2023-01-20 00:24:23
  * @Description:  
  */
 def_EHelper(lui) {
@@ -28,5 +28,5 @@ def_EHelper(sltu) {
    * otherwise sets rd to zero (assembler pseudoinstruction SNEZ rd, rs).
    */
   rtl_setrelop(s, RELOP_LTU, ddest, dsrc1, dsrc2);
-  printf("%u\t%u\t%u\n", *ddest, *dsrc1, *dsrc2);
+  printf("%x\t%x\t%x\n", *ddest, *dsrc1, *dsrc2);
 }
