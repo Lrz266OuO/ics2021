@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-19 23:22:21
+ * @LastEditTime: 2023-01-19 23:31:30
  * @Description:  
  */
 def_EHelper(lui) {
@@ -21,7 +21,7 @@ def_EHelper(add) {
   rtl_add(s, ddest, dsrc1, dsrc2);
 }
 
-def_EHelper(sltu) {
+// def_EHelper(sltu) {
   /* SLT and SLTU perform signed and unsigned compares respectively, 
    * writing 1 to rd if rs1 < rs2, 0 otherwise.
    * Note, SLTU rd, x0, rs2 sets rd to 1 if rs2 is not equal to zero, 
@@ -29,4 +29,4 @@ def_EHelper(sltu) {
    */
   
 
-}
+// }
