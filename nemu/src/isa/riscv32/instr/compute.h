@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 01:12:51
+ * @LastEditTime: 2023-01-21 01:48:50
  * @Description:  
  */
 def_EHelper(lui) {
@@ -19,6 +19,10 @@ def_EHelper(addi) {
 
 def_EHelper(sltiu) {
   rtl_setrelopi(s, RELOP_LTU, ddest, dsrc1, id_src2->imm);
+}
+
+def_EHelper(andi) {
+  rtl_andi(s, ddest, dsrc1, id_src2->imm);
 }
 
 def_EHelper(srai) {
