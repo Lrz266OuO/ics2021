@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 04:32:41
+ * @LastEditTime: 2023-01-21 04:42:05
  * @Description:  
  */
 def_EHelper(lui) {
@@ -79,4 +79,12 @@ def_EHelper(mul) {
    * and places the lower XLEN bits in the destination register.
    */
   rtl_mulu_lo(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(div) {
+  /* DIV and DIVU perform an XLEN bits by XLEN bits 
+   * signed and unsigned integer division of rs1 by rs2, 
+   * rounding towards zero.
+   */
+  rtl_divs_q(s, ddest, dsrc1, dsrc2);
 }
