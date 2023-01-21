@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 01:06:22
+ * @LastEditTime: 2023-01-21 01:12:51
  * @Description:  
  */
 def_EHelper(lui) {
@@ -30,8 +30,8 @@ def_EHelper(srai) {
    * SRLI is a logical right shift (zeros are shifted into the upper bits); 
    * and SRAI is an arithmetic right shift (the original sign bit is copied into the vacated upper bits).
    */
-  rtl_andi(s, dsrc2, dsrc2, 31);
-  rtl_sra(s, ddest, dsrc1, dsrc2);
+  // rtl_andi(s, s0, id_src2->imm, 31);
+  rtl_srai(s, ddest, dsrc1, (id_src2->imm & 0x1f));
 }
 
 def_EHelper(add) {
