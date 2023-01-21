@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 01:59:42
+ * @LastEditTime: 2023-01-21 04:32:41
  * @Description:  
  */
 def_EHelper(lui) {
@@ -72,4 +72,11 @@ def_EHelper(or) {
 
 def_EHelper(and) {
   rtl_and(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(mul) {
+  /* MUL performs an XLEN-bit*XLEN-bit multiplication of rs1 by rs2 
+   * and places the lower XLEN bits in the destination register.
+   */
+  rtl_mulu_lo(s, ddest, dsrc1, dsrc2);
 }
