@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-20 02:57:09
+ * @LastEditTime: 2023-01-21 01:03:02
  * @Description:  
  */
 def_EHelper(lui) {
@@ -19,6 +19,19 @@ def_EHelper(addi) {
 
 def_EHelper(sltiu) {
   rtl_setrelopi(s, RELOP_LTU, ddest, dsrc1, id_src2->imm);
+}
+
+def_EHelper(srai) {
+  /* Shifts by a constant are encoded as a specialization of the I-type format. 
+   * The operand to be shifted is in rs1, 
+   * and the shift amount is encoded in the lower 5 bits of the I-immediate field. 
+   * The right shift type is encoded in bit 30. 
+   * SLLI is a logical left shift (zeros are shifted into the lower bits);
+   * SRLI is a logical right shift (zeros are shifted into the upper bits); 
+   * and SRAI is an arithmetic right shift (the original sign bit is copied into the vacated upper bits).
+   */
+  rtl_andi(s, dsrc2, dsrc2, 31);
+  rtl_sra(s, ddest, dsrc1, dsrc2);
 }
 
 def_EHelper(add) {
