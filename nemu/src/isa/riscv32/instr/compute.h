@@ -30,7 +30,6 @@ def_EHelper(srai) {
    * SRLI is a logical right shift (zeros are shifted into the upper bits); 
    * and SRAI is an arithmetic right shift (the original sign bit is copied into the vacated upper bits).
    */
-  // rtl_andi(s, s0, id_src2->imm, 31);
   rtl_srai(s, ddest, dsrc1, (id_src2->imm & 0x1f));
 }
 
