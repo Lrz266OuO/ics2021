@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 04:42:05
+ * @LastEditTime: 2023-01-21 04:56:06
  * @Description:  
  */
 def_EHelper(lui) {
@@ -87,4 +87,11 @@ def_EHelper(div) {
    * rounding towards zero.
    */
   rtl_divs_q(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(rem) {
+  /* REM and REMU provide the remainder of the corresponding division operation. 
+   * For REM, the sign of the result equals the sign of the dividend.
+   */
+  rtl_divs_r(s, ddest, dsrc1, dsrc2);
 }
