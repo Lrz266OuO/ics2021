@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 01:48:50
+ * @LastEditTime: 2023-01-21 01:53:19
  * @Description:  
  */
 def_EHelper(lui) {
@@ -43,6 +43,10 @@ def_EHelper(add) {
 
 def_EHelper(sub) {
   rtl_sub(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(sll) {
+  rtl_sll(s, ddest, dsrc1, dsrc2);
 }
 
 def_EHelper(sltu) {
