@@ -2,9 +2,17 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 02:01:57
+ * @LastEditTime: 2023-01-21 20:34:47
  * @Description:  
  */
+
+def_EHelper(lh) {
+  /* LH loads a 16-bit value from memory,
+   * then sign-extends to 32-bits before storing in rd.
+   */
+  rtl_lms(s, ddest, dsrc1, id_src2->imm, 2);
+}
+
 def_EHelper(lw) {
   rtl_lm(s, ddest, dsrc1, id_src2->imm, 4);
 }
