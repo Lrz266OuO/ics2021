@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 20:41:26
+ * @LastEditTime: 2023-01-22 00:59:16
  * @Description:  
  */
 #include <cpu/decode.h>
@@ -15,7 +15,7 @@
                       f(sb) f(sh) f(sw) \
                       f(addi) f(sltiu) f(xori) f(andi) f(slli) f(srli) f(srai) \
                       f(add) f(sub) f(sll) f(slt) f(sltu) f(xor) f(or) f(and) \
-                      f(mul) f(div) f(rem) \
+                      f(mul) f(mulh) f(div) f(rem) \
                       f(inv) f(nemu_trap)
 
 def_all_EXEC_ID();
