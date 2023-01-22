@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 04:48:19
+ * @LastEditTime: 2023-01-21 20:20:35
  * @Description:  
  */
 #include <cpu/decode.h>
@@ -10,7 +10,7 @@
 
 #define INSTR_LIST(f) f(lui) f(auipc) \
                       f(jal) f(jalr) \
-                      f(beq) f(bne) f(bge) \
+                      f(beq) f(bne) f(blt) f(bge) \
                       f(lw) f(lbu) \
                       f(sb) f(sh) f(sw) \
                       f(addi) f(sltiu) f(xori) f(andi) f(srai) \
