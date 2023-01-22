@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 20:42:17
+ * @LastEditTime: 2023-01-22 02:13:33
  * @Description:  
  */
 def_EHelper(lui) {
@@ -91,6 +91,14 @@ def_EHelper(mul) {
    * and places the lower XLEN bits in the destination register.
    */
   rtl_mulu_lo(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(mulh) {
+  /* MULH, MULHU, and MULHSU perform the same multiplication 
+   * but return the upper XLEN bits of the full 2×XLEN-bit product, 
+   * for signed×signed, unsigned×unsigned, and signed rs1×unsigned rs2 multiplication, respectively.
+   */
+  rtl_muls_hi(s, ddest, dsrc1, dsrc2);
 }
 
 def_EHelper(div) {
