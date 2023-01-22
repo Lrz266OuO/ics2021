@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-21 20:20:35
+ * @LastEditTime: 2023-01-21 20:25:06
  * @Description:  
  */
 #include <cpu/decode.h>
@@ -14,7 +14,7 @@
                       f(lw) f(lbu) \
                       f(sb) f(sh) f(sw) \
                       f(addi) f(sltiu) f(xori) f(andi) f(srai) \
-                      f(add) f(sub) f(sll) f(sltu) f(xor) f(or) f(and) \
+                      f(add) f(sub) f(sll) f(slt) f(sltu) f(xor) f(or) f(and) \
                       f(mul) f(div) f(rem) \
                       f(inv) f(nemu_trap)
 
