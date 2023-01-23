@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-22 21:29:15
+ * @LastEditTime: 2023-01-23 00:25:37
  * @Description:  
  */
 def_EHelper(lui) {
@@ -112,9 +112,17 @@ def_EHelper(mul) {
 def_EHelper(mulh) {
   /* MULH, MULHU, and MULHSU perform the same multiplication 
    * but return the upper XLEN bits of the full 2×XLEN-bit product, 
-   * for signed×signed, unsigned×unsigned, and signed rs1×unsigned rs2 multiplication, respectively.
+   * for signed×signed, unsigned×unsigned, and signed rs1 × unsigned rs2 multiplication, respectively.
    */
   rtl_muls_hi(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(mulhsu) {
+  rtl_mulsu_hi(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(mulhu) {
+  rtl_mulu_hi(s, ddest, dsrc1, dsrc2);
 }
 
 def_EHelper(div) {
@@ -125,9 +133,17 @@ def_EHelper(div) {
   rtl_divs_q(s, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(divu) {
+  rtl_divu_q(s, ddest, dsrc1, dsrc2);
+}
+
 def_EHelper(rem) {
   /* REM and REMU provide the remainder of the corresponding division operation. 
    * For REM, the sign of the result equals the sign of the dividend.
    */
   rtl_divs_r(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(remu) {
+  rtl_divu_r(s, ddest, dsrc1, dsrc2);
 }

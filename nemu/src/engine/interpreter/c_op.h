@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-18 22:09:03
+ * @LastEditTime: 2023-01-23 00:22:46
  * @Description:  
  */
 #ifndef __C_OP_H__
@@ -42,6 +42,7 @@
 #else
 #define c_mulu_hi(a, b) (((uint64_t)(a) * (uint64_t)(b)) >> 32)
 #define c_muls_hi(a, b) (((int64_t)(sword_t)(a) * (int64_t)(sword_t)(b)) >> 32)
+#define c_mulsu_hi(a, b) (((int64_t)(sword_t)(a) * (uint64_t)(b)) >> 32)
 #endif
 
 #define c_divu_q(a, b) ((a) / (b))
