@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-18 23:43:00
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-22 04:51:08
+ * @LastEditTime: 2023-01-22 21:22:54
  * @Description:  
  */
 
@@ -48,6 +48,12 @@ def_EHelper(bge) {
 
 def_EHelper(bltu) {
   if (*dsrc1 < *dsrc2) {
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->imm);
+  }
+}
+
+def_EHelper(bgeu) {
+  if (*dsrc1 >= *dsrc2) {
     rtl_addi(s, &s->dnpc, &s->pc, id_dest->imm);
   }
 }
