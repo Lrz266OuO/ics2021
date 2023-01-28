@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-28 03:55:23
+ * @LastEditTime: 2023-01-28 03:56:38
  * @Description:  
  */
 #include <isa.h>
@@ -20,9 +20,7 @@ uint8_t* new_space(int size) {
   // page aligned;
   size = (size + (PAGE_SIZE - 1)) & ~PAGE_MASK;
   p_space += size;
-  printf("\n\n1\n\n");
   assert(p_space - io_space < IO_SPACE_MAX);
-  printf("\n\n2\n\n");
   return p;
 }
 
