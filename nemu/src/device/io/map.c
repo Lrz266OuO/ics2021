@@ -20,9 +20,9 @@ uint8_t* new_space(int size) {
   // page aligned;
   size = (size + (PAGE_SIZE - 1)) & ~PAGE_MASK;
   p_space += size;
-  printf("1");
+  printf("\n\n1\n\n");
   assert(p_space - io_space < IO_SPACE_MAX);
-  printf("2");
+  printf("\n\n2\n\n");
   return p;
 }
 
