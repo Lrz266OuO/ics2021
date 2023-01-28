@@ -1,3 +1,10 @@
+/*
+ * @Author: Runze Li lirunze.me@gmail.com
+ * @Date: 2023-01-11 02:09:44
+ * @LastEditors: Runze Li
+ * @LastEditTime: 2023-01-28 03:55:23
+ * @Description:  
+ */
 #include <isa.h>
 #include <memory/host.h>
 #include <memory/vaddr.h>
@@ -13,7 +20,9 @@ uint8_t* new_space(int size) {
   // page aligned;
   size = (size + (PAGE_SIZE - 1)) & ~PAGE_MASK;
   p_space += size;
+  printf("1");
   assert(p_space - io_space < IO_SPACE_MAX);
+  printf("2");
   return p;
 }
 

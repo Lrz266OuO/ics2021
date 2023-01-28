@@ -2,10 +2,9 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-17 02:29:32
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-28 03:53:57
+ * @LastEditTime: 2023-01-28 03:55:02
  * @Description:  
  */
-#include <stdio.h>
 #include <am.h>
 #include <nemu.h>
 
@@ -26,9 +25,7 @@ void halt(int code) {
   nemu_trap(code);
 
   // should not reach here
-  while (1) {
-    printf("halt");
-  }
+  while (1);
 }
 
 void _trm_init() {
