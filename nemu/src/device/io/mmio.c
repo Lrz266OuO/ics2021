@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-11 02:09:44
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-28 03:10:33
+ * @LastEditTime: 2023-01-28 04:24:02
  * @Description:  
  */
 #include <device/map.h>
@@ -34,5 +34,6 @@ word_t mmio_read(paddr_t addr, int len) {
 }
 
 void mmio_write(paddr_t addr, int len, word_t data) {
+  printf("1\n");
   map_write(addr, len, data, fetch_mmio_map(addr));
 }
