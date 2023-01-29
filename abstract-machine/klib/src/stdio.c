@@ -2,7 +2,7 @@
  * @Author: Runze Li lirunze.me@gmail.com
  * @Date: 2023-01-17 02:29:32
  * @LastEditors: Runze Li
- * @LastEditTime: 2023-01-23 03:23:10
+ * @LastEditTime: 2023-01-28 04:35:57
  * @Description:  
  */
 #include <am.h>
@@ -20,8 +20,11 @@ int printf(const char *fmt, ...) {
   va_list arg;
   va_start (arg, fmt);
   int done = vsprintf(buffer, fmt, arg);
-  putstr(buffer);
+  // putstr(buffer);
   va_end(arg);
+  for (int i = 0; i < done; ++i) {
+    putch(buffer[i]);
+  }
   return done;
 }
 
